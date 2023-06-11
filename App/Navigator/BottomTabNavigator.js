@@ -17,19 +17,24 @@
 
 // const styles = StyleSheet.create({})
 import * as React from 'react';
-import { View, TouchableOpacity, StyleSheet,Text,Image } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {View, TouchableOpacity, StyleSheet, Text, Image} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Discover from './../Screens/Discover/Discover';
 import Relax from './../Screens/Relax/Relax';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabBar = ({ state, descriptors, navigation }) => {
+const BottomTabBar = ({state, descriptors, navigation}) => {
   return (
     <View style={styles.tabBarContainer}>
       {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label = options.tabBarLabel !== undefined ? options.tabBarLabel : options.title !== undefined ? options.title : route.name;
+        const {options} = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
         const isFocused = state.index === index;
 
         const onPress = () => {
@@ -48,9 +53,18 @@ const BottomTabBar = ({ state, descriptors, navigation }) => {
           <TouchableOpacity
             key={route.key}
             onPress={onPress}
-            style={[styles.tabBarButton, isFocused ? styles.selectedTab : null]}
-          >
-          <Image resize style={{width:25,height:25}} source={require('../Assests/home.png')}/>
+            style={[
+              styles.tabBarButton,
+              isFocused ? styles.selectedTab : null,
+            ]}>
+            <View style={[styles.iconContainer,{ backgroundColor: isFocused  ? '#AE969F' :"#c27bbf"}]}>
+              <Image
+                resize
+                style={{width: 25, height: 25}}
+                source={require('../Assests/home.png')}
+                />
+                <Text>{route.name}</Text>
+            </View>
           </TouchableOpacity>
         );
       })}
@@ -60,7 +74,7 @@ const BottomTabBar = ({ state, descriptors, navigation }) => {
 
 const BottomTabNavigato = () => {
   return (
-    <Tab.Navigator tabBar={(props) => <BottomTabBar {...props} />}>
+    <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -75,10 +89,10 @@ const BottomTabNavigato = () => {
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: 'settings-outline',
-          tabBarLabelStyle:{
-            fontSize:14,
-            color:'#000'
-          }
+          tabBarLabelStyle: {
+            fontSize: 14,
+            color: '#000',
+          },
         }}
       />
       <Tab.Screen
@@ -89,7 +103,7 @@ const BottomTabNavigato = () => {
           tabBarIcon: 'home-outline',
         }}
       />
-       <Tab.Screen
+      <Tab.Screen
         name="Relax"
         component={Relax}
         options={{
@@ -102,14 +116,22 @@ const BottomTabNavigato = () => {
 };
 
 // Example screens for Home and Settings
-const HomeScreen = () => <View style={styles.screen}><Text>Home Screen</Text></View>;
-const SettingsScreen = () => <View style={styles.screen}><Text>Settings Screen</Text></View>;
+const HomeScreen = () => (
+  <View style={styles.screen}>
+    <Text>Home Screen</Text>
+  </View>
+);
+const SettingsScreen = () => (
+  <View style={styles.screen}>
+    <Text>Settings Screen</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   tabBarContainer: {
     flexDirection: 'row',
-    height: 60,
-    backgroundColor: '#fff',
+    height: 75,
+    backgroundColor: '#c27bbf',
   },
   tabBarButton: {
     flex: 1,
@@ -117,16 +139,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectedTab: {
-    backgroundColor: '#ff6f00',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    marginTop: -10,
+    backgroundColor: '#c27bbf',
+    // borderTopLeftRadius: 35,
+    // borderTopRightRadius: 35,
+    borderRadius: 100,
+    marginTop: -20,
+    height: 95,
+    width: 45,
   },
   screen: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  iconContainer:{
+    // borderWidth:1,
+    padding:15,
+    borderRadius:150,
+    borderColor:"#fff",
+    justifyContent:"center",
+    alignItems:'center'
+  }
 });
 
 export default BottomTabNavigato;
